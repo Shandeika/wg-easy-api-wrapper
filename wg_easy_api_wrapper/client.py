@@ -24,8 +24,6 @@ class Client:
                  updated_at: str,
                  session: aiohttp.ClientSession,
                  server: 'Server',):
-        # вывод всех входящих аргументов
-        print(address, created_at, enabled, uid, last_handshake_at, name, persistent_keepalive, public_key, transfer_rx, transfer_tx, updated_at)
         self._address = address
         self._created_at = datetime.strptime(created_at, time_format)
         self._enabled = bool(enabled)
