@@ -1,4 +1,6 @@
 import aiohttp
+
+from .errors import AlreadyLoggedInError
 from .client import Client
 
 
@@ -7,8 +9,12 @@ class Server:
         self.host = host
         self.port = port
         self._password = password
-        self._session = session
-        self.clients = []
+        self._session = aiohttp.ClientSession()
+
+    async def is_logged_in(self):
+        session = await self.get_session()
+        json_response = await session.json()
+        return json_response["authenticated"]
 
     def url_builder(self, path: str) -> str:
         return f"http://{self.host}:{self.port}{path}"
@@ -22,13 +28,15 @@ class Server:
         self._session.close()
 
     async def login(self):
-        # POST to /api/session
+        if await self.is_logged_in():
+            raise AlreadyLoggedInError("You are already logged in")
         await self._session.post(self.url_builder("/api/session"), json={"password": self._password})
         session = await self.get_session()
         return session
 
     async def logout(self) -> None:
-        # DELETE to /api/session
+        if not await self.is_logged_in():
+            raise AlreadyLoggedInError("You are not logged in")
         await self._session.delete(self.url_builder("/api/session"))
 
     async def get_session(self):
