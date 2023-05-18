@@ -19,13 +19,16 @@ class Server:
     def url_builder(self, path: str) -> str:
         return f"http://{self.host}:{self.port}{path}"
 
-    def __enter__(self):
-        if self._session is None:
-            self._session = aiohttp.ClientSession()
+    async def __aenter__(self):
+        await self.login()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self._session.close()
+    async def __aexit__(self, exc_type, exc, exc_tb):
+        if await self.is_logged_in():
+            await self.logout()
+        await self._session.close()
+        if exc:
+            raise exc
 
     async def login(self):
         if await self.is_logged_in():
