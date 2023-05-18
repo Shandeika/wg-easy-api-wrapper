@@ -61,3 +61,9 @@ class Server:
             self.url_builder("/api/wireguard/client"),
             json={"name": name},
         )
+
+    async def get_client(self, uid: str):
+        for client in await self.get_clients():
+            if client.uid == uid:
+                return client
+        return None
