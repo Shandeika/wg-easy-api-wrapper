@@ -5,11 +5,11 @@ from .errors import AlreadyLoggedInError
 
 
 class Server:
-    def __init__(self, host: str, port: int, password: str):
+    def __init__(self, host: str, port: int, password: str, session: aiohttp.ClientSession = None):
         self.host = host
         self.port = port
         self._password = password
-        self._session = aiohttp.ClientSession()
+        self._session = aiohttp.ClientSession() if session is None else session
 
     async def is_logged_in(self):
         session = await self.get_session()
