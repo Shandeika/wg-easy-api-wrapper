@@ -5,7 +5,7 @@ from .client import Client
 
 
 class Server:
-    def __init__(self, host: str, port: int, password: str, session: aiohttp.ClientSession = None):
+    def __init__(self, host: str, port: int, password: str):
         self.host = host
         self.port = port
         self._password = password
