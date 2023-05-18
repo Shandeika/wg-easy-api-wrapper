@@ -1,7 +1,7 @@
 import aiohttp
 
-from .errors import AlreadyLoggedInError
 from .client import Client
+from .errors import AlreadyLoggedInError
 
 
 class Server:
@@ -61,7 +61,3 @@ class Server:
             self.url_builder("/api/wireguard/client"),
             json={"name": name},
         )
-
-
-
-
