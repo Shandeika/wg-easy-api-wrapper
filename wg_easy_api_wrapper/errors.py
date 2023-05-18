@@ -1,0 +1,2 @@
+class AlreadyLoggedInError(Exception):
+    pass

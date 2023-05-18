@@ -1,5 +1,7 @@
 import aiohttp
+
 from .client import Client
+from .errors import AlreadyLoggedInError
 
 
 class Server:
@@ -7,28 +9,37 @@ class Server:
         self.host = host
         self.port = port
         self._password = password
-        self._session = session
-        self.clients = []
+        self._session = aiohttp.ClientSession() if session is None else session
+
+    async def is_logged_in(self):
+        session = await self.get_session()
+        json_response = await session.json()
+        return json_response["authenticated"]
 
     def url_builder(self, path: str) -> str:
         return f"http://{self.host}:{self.port}{path}"
 
-    def __enter__(self):
-        if self._session is None:
-            self._session = aiohttp.ClientSession()
+    async def __aenter__(self):
+        await self.login()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self._session.close()
+    async def __aexit__(self, exc_type, exc, exc_tb):
+        if await self.is_logged_in():
+            await self.logout()
+        await self._session.close()
+        if exc:
+            raise exc
 
     async def login(self):
-        # POST to /api/session
+        if await self.is_logged_in():
+            raise AlreadyLoggedInError("You are already logged in")
         await self._session.post(self.url_builder("/api/session"), json={"password": self._password})
         session = await self.get_session()
         return session
 
     async def logout(self) -> None:
-        # DELETE to /api/session
+        if not await self.is_logged_in():
+            raise AlreadyLoggedInError("You are not logged in")
         await self._session.delete(self.url_builder("/api/session"))
 
     async def get_session(self):
@@ -50,7 +61,3 @@ class Server:
             self.url_builder("/api/wireguard/client"),
             json={"name": name},
         )
-
-
-
-

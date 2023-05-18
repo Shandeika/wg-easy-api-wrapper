@@ -23,7 +23,7 @@ class Client:
                  transfer_tx: int,
                  updated_at: str,
                  session: aiohttp.ClientSession,
-                 server: 'Server',):
+                 server: 'Server', ):
         self._address = address
         self._created_at = datetime.strptime(created_at, time_format)
         self._enabled = bool(enabled)
