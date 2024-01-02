@@ -119,7 +119,7 @@ class Client:
     async def enable(self):
         if self._enabled:
             raise ValueError("Client is already enabled")
-        await self._session.put(
+        await self._session.post(
             self._server.url_builder("/api/wireguard/client/{}/enable".format(self._uid)),
             json={"enable": True}
         )
