@@ -33,7 +33,8 @@ class Server:
     async def login(self):
         if await self.is_logged_in():
             raise AlreadyLoggedInError("You are already logged in")
-        await self._session.post(self.url_builder("/api/session"), json={"password": self._password})
+        answer = await self._session.post(self.url_builder("/api/session"), json={"password": self._password})
+        self._session.cookie_jar.update_cookies(answer.cookies)
         session = await self.get_session()
         return session
 
