@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="w"
+                 name="wg-easy-api-wrapper"
+                 start-page="home.md">
+
+    <toc-element topic="home.md"/>
+    <toc-element topic="Server.md"/>
+    <toc-element topic="Client.md"/>
+</instance-profile>
