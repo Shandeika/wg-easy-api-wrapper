@@ -1,7 +1,7 @@
 # wg-easy-api-wrapper
 Python module for convenient interaction with the application API [wg-easy](https://github.com/wg-easy/wg-easy)
 
-You can see all the methods in the documentation on GitHub
+You can see all the methods in the documentation on [GitHub Pages](https://shandeika.github.io/wg-easy-api-wrapper/)
 
 ## Usage
 A quick example of creating a client:
