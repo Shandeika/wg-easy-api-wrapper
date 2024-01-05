@@ -11,7 +11,7 @@ class Server:
         self._password = password
         self._session = aiohttp.ClientSession() if session is None else session
 
-    async def is_logged_in(self):
+    async def is_logged_in(self) -> bool:
         session = await self.get_session()
         json_response = await session.json()
         return json_response["authenticated"]
