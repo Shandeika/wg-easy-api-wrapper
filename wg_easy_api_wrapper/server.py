@@ -5,9 +5,8 @@ from .errors import AlreadyLoggedInError
 
 
 class Server:
-    def __init__(self, host: str, port: int, password: str, session: aiohttp.ClientSession = None):
-        self.host = host
-        self.port = port
+    def __init__(self, url: str, password: str, session: aiohttp.ClientSession = None):
+        self.url = url
         self._password = password
         self._session = aiohttp.ClientSession() if session is None else session
 
@@ -17,7 +16,7 @@ class Server:
         return json_response["authenticated"]
 
     def url_builder(self, path: str) -> str:
-        return f"http://{self.host}:{self.port}{path}"
+        return f"{self.url}{path}"
 
     async def __aenter__(self):
         await self.login()
