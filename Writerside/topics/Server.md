@@ -6,8 +6,7 @@
 
 ### Параметры
 
-- `host` (str): Хост сервера.
-- `port` (int): Порт сервера.
+- `url` (str): URL адрес wg-easy. Пример: http://wg.example.com:51821
 - `password` (str): Пароль для аутентификации.
 - `session` (aiohttp.ClientSession, опционально): Экземпляр `aiohttp.ClientSession` для использования при выполнении HTTP-запросов. Если не указан, будет создан новый сеанс.
 

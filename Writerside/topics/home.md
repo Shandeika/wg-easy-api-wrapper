@@ -11,7 +11,7 @@ from wg_easy_api_wrapper import Server
 
 
 async def main():
-    async with Server("wg.example.com", 51821, "SuPerSecret_pass") as server:
+    async with Server("http://wg.example.com:51821", "SuPerSecret_pass") as server:
         await server.create_client("client_name")
 
 ```
