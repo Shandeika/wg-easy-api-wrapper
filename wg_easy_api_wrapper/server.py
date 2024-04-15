@@ -6,6 +6,10 @@ from .errors import AlreadyLoggedInError
 
 class Server:
     def __init__(self, url: str, password: str, session: aiohttp.ClientSession = None):
+        """
+        :param url: Example: http://wg.example.com:51821
+        :param password: Your password for installing wg-easy
+        """
         self.url = url
         self._password = password
         self._session = aiohttp.ClientSession() if session is None else session

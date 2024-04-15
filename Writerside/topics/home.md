@@ -27,7 +27,7 @@ from wg_easy_api_wrapper import Server
 
 async def main():
     async with aiohttp.ClientSession() as session:
-        server = Server("wg.example.com", 51821, "SuPerSecret_pass", session)
+        server = Server("http://wg.example.com:51821", "SuPerSecret_pass", session)
         await server.login()
         await server.create_client("client_name")
 
